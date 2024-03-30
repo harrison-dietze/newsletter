@@ -12,38 +12,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import newsletter.application.service.ClienteService;
-import newsletter.domain.model.Cliente;
+import newsletter.application.service.NoticiaService;
+import newsletter.domain.model.Noticia;
 
 @RestController
-@RequestMapping("/cliente")
-public class ClienteController {
+@RequestMapping("/noticia")
+public class NoticiaController {
 
 	@Autowired
-	private ClienteService clienteService;
+	private NoticiaService noticiaService;
 
 	@GetMapping
-	public List<Cliente> getAllClientes() {
-		return clienteService.getAllClientes();
+	public List<Noticia> getAllNoticias() {
+		return noticiaService.getAllNoticias();
 	}
 
 	@GetMapping("/{id}")
-	public Cliente getClienteById(@PathVariable Long id) {
-		return clienteService.getClienteById(id);
+	public Noticia getNoticiaById(@PathVariable Long id) {
+		return noticiaService.getNoticiaById(id);
 	}
 
 	@PostMapping
-	public Cliente createCliente(@RequestBody Cliente cliente) {
-		return clienteService.createCliente(cliente);
+	public Noticia createNoticia(@RequestBody Noticia noticia) {
+		return noticiaService.createNoticia(noticia);
 	}
 
 	@PutMapping("/{id}")
-	public Cliente updateCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
-		return clienteService.updateCliente(id, cliente);
+	public Noticia updateNoticia(@PathVariable Long id, @RequestBody Noticia noticia) {
+		return noticiaService.updateNoticia(id, noticia);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteCliente(@PathVariable Long id) {
-		clienteService.deleteCliente(id);
+	public void deleteNoticia(@PathVariable Long id) {
+		noticiaService.deleteNoticia(id);
 	}
 }
