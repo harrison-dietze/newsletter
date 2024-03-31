@@ -18,7 +18,7 @@ import newsletter.domain.model.Cliente;
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
-
+	
 	@Autowired
 	private ClienteService clienteService;
 
@@ -26,7 +26,7 @@ public class ClienteController {
 	public List<Cliente> getAllClientes() {
 		return clienteService.getAllClientes();
 	}
-
+	
 	@GetMapping("/{id}")
 	public Cliente getClienteById(@PathVariable Long id) {
 		return clienteService.getClienteById(id);

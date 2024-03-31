@@ -1,5 +1,7 @@
 package newsletter.domain.model;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -12,6 +14,16 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "nome", length = 256, nullable = false)
+	private String nome;
+
+	@Column(name = "email", length = 256, nullable = false, unique = true)
+	private String email;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "data_nascimento")
+	private LocalDate dataNascimento;
+	
 	public Long getId() {
 		return id;
 	}
@@ -36,31 +48,30 @@ public class Cliente {
 		this.email = email;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-
-	@Column(name = "nome", length = 256, nullable = false)
-	private String nome;
-
-	@Column(name = "email", length = 256, nullable = false)
-	private String email;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name = "data_nascimento")
-	private Date dataNascimento;
 
 	public Cliente() {
 	}
 
-	public Cliente(String nome, String email, Date dataNascimento) {
+	public Cliente(String nome, String email, LocalDate dataNascimento) {
 		this.nome = nome;
 		this.email = email;
 		this.dataNascimento = dataNascimento;
+	}
+	
+	public Boolean isAniversariante() {
+		LocalDate data = this.getDataNascimento();
+		if(this.getDataNascimento() == null) return false;
+		
+		LocalDate hoje = LocalDate.now();
+		
+	    return hoje.getDayOfMonth() == data.getDayOfMonth() && data.getMonthValue() == hoje.getMonthValue();
 	}
 
 }

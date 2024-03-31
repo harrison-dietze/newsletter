@@ -36,4 +36,8 @@ public class NoticiaService {
 	public void deleteNoticia(Long id) {
 		noticiaRepository.deleteById(id);
 	}
+	
+	public List<Noticia> getPendentes() {
+        return noticiaRepository.findByEnvioRealizado(false);
+    }
 }
