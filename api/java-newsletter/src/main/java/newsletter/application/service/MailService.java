@@ -49,12 +49,11 @@ public class MailService {
   	    helper = new MimeMessageHelper(mimeMessage, false);
     	
   	    String assuntoEmail = resourceBundle.getString("email_titulo_noticias");
+  	    helper.setSubject(assuntoEmail);
   	    
     	String corpoEmailInicio =  resourceBundle.getString("html_boilerplate_inicio");
-    	String corpoEmailFim =  resourceBundle.getString("html_boilerplate_fim");
     	String corpoEmailNoticias = montarCorpoEmailNoticias(noticias);
-    	
-    	helper.setSubject(assuntoEmail);
+    	String corpoEmailFim =  resourceBundle.getString("html_boilerplate_fim");
     	
     	clientes.forEach(cliente -> {
     		String corpoEmailDestinatario = resourceBundle.getString("email_corpo_bom_dia_destinatario").replace("{destinatario}", cliente.getNome());
@@ -67,6 +66,8 @@ public class MailService {
     		
     		enviarEmailDestinatario(cliente, helper, mimeMessage, corpoEmailInicio + corpoEmailDestinatario + corpoEmailNoticias + corpoEmailFim);
     	});
+    	
+    	marcarNoticiasComoEnviadas(noticias);
     	
     	System.out.println("E-mails enviados!");
         return;
@@ -98,6 +99,13 @@ public class MailService {
 			javaMailSender.send(message);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+    }
+    
+    private void marcarNoticiasComoEnviadas(List<Noticia> noticias) {
+    	for (Noticia noticia : noticias) {
+			noticia.setEnvioRealizado(true);
+			noticiaService.updateNoticia(noticia.getId(), noticia);
 		}
     }
 }
